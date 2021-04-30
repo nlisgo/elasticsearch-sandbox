@@ -31,7 +31,6 @@ services:
           - es-net
         depends_on:
           - elasticsearch
-        tty: true
 networks:
     es-net:
         driver: bridge
