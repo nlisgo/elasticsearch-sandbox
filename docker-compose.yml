@@ -4,23 +4,25 @@ services:
         container_name: es-container
         image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
         environment:
-          - xpack.security.enabled=false
-          - "discovery.type=single-node"
+            - xpack.security.enabled=false
+            - "discovery.type=single-node"
         networks:
-          - es-net
+            - es-net
         ports:
-          - 9201:9200
+            - 9201:9200
+        volumes:
+            - ./.docker/data:/usr/share/elasticsearch/data
     kibana:
         container_name: kb-container
         image: docker.elastic.co/kibana/kibana:7.11.0
         environment:
-          - ELASTICSEARCH_HOSTS=http://es-container:9200
+            - ELASTICSEARCH_HOSTS=http://es-container:9200
         networks:
-          - es-net
+            - es-net
         depends_on:
-          - elasticsearch
+            - elasticsearch
         ports:
-          - 5602:5601
+            - 5602:5601
     elasticsearch-setup:
         container_name: es-setup-container
         image: ubuntu:18.04
@@ -28,9 +30,9 @@ services:
             context: .
             dockerfile: Dockerfile.setup
         networks:
-          - es-net
+            - es-net
         depends_on:
-          - elasticsearch
+            - elasticsearch
 networks:
     es-net:
         driver: bridge
