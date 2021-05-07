@@ -13,11 +13,11 @@ apt-get install yq -y && \
 apt-get -y install nodejs && \
 npm install elasticdump -g
 
-COPY mappings.yaml /tmp/mappings.yaml
-COPY es_data.json /tmp/es_data.json
-COPY es-wait-for.sh /tmp/es-wait-for.sh
-COPY es-setup.sh /tmp/es-setup.sh
+COPY mappings.yaml /usr/local/mappings.yaml
+COPY es_data.json /usr/local/es_data.json
+COPY es-wait-for.sh /usr/local/es-wait-for.sh
+COPY es-setup.sh /usr/local/es-setup.sh
 
-WORKDIR /tmp
+WORKDIR /usr/local
 
-CMD ["./es-wait-for.sh", "http://es-container:9200", "./es-setup.sh"]
+CMD ["./es-wait-for.sh", "http://es-container:9200", "./es-setup.sh http://es-container:9200/elife_search ./es_data.json"]
